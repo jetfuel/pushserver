@@ -2,12 +2,27 @@
 
 Pushserver is a ruby gem that helps Web YP to send push notification to all the devices a user has.
 
-Push Server has three methods
-1. setAppId(appId)
-  Set AppId so we know which version of Web YP it is. 
-2. setURI(url) 
-  set the end point for Push Notification Server
-3. sendPushToUser ()
+PushServer Gem has two main attributes. 
+
+1. uri, This is the Push Notification Server uri. The default value is 'http://184.72.174.245/pushservice.php'. To modify, use PushServer.uri = 'new path'
+
+2. appId, This is the appId of the application. The default value is 'pushtest'. To Modify, use PushServer.appId.
+
+PusServer Gem only has one method
+  sendPushToUser(uid, alert)
+    * uid: uid is the username/user_email
+    * alert: The message that will be sent to the user. 
+
+To test, simply run the following ruby code.
+Of course, you will have to install the 'pushtest' application. Please contact
+David Chilongo <dchilongo@atti.com> for help
+============
+require 'pushserver'
+PushServer.appId = "pushtest"
+PushServer.uri = 'http://184.72.174.245/pushservice.php'
+PushServer.sendPushToUser("uer's email", "This is the message")
+============
+
 == Contributing to pushserver
  
 * Check out the latest master to make sure the feature hasn't been implemented or the bug hasn't been fixed yet

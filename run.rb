@@ -1,8 +1,6 @@
 #!/usr/local/bin/ruby
-
 require 'rubygems'
 require 'pushserver'
-require 'json'
 
 PushServer.appId = "pushtest"
 PushServer.uri = 'http://184.72.174.245/pushservice.php'
