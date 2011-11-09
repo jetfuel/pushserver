@@ -1,29 +1,22 @@
 require 'uri'
+require 'rubygems'
+require 'active_support/core_ext/module/attribute_accessors'
 module PushServer
   # default url and pushtest values
-  @url = URI.parse('http://184.72.174.245/pushservice.php')
-  @appId = 'pushtest'
-
-  # set uri
-  def self.setURI(url)
-    @url = URI.parse(url)
-  end
-
-  # set app Id
-  def self.setAppId(appId)
-    @appId = appId
-  end
+  mattr_accessor :uri
+  mattr_accessor :appId
+  @@uri = 'http://184.72.174.245/pushservice.php'
+  @@appId = 'pushtest'
 
   def self.sendPushToUser(uid, alert)
     require 'net/http'
     require 'json'
 
-    puts @url
-  
+    url = URI.parse(@@uri)
     # json data
     metadata = JSON.unparse({ 
                 'm' => 'push',
-                'appId' => @appId,
+                'appId' => @@appId,
                 'uid'=>uid,
                 'delayWhileIdle' => 1,
                 'badge' => 0,
@@ -31,10 +24,10 @@ module PushServer
     json_data = {'metadata'=>metadata}
 
     # Send out the request. This is where the magic begins
-    req = Net::HTTP::Post.new(@url.path)
+    req = Net::HTTP::Post.new(url.path)
     req.add_field("X-Ypc-PushAuth", "super-secret-x")
     req.set_form_data(json_data)
-    res = Net::HTTP.new(@url.host, @url.port).start do |http|
+    res = Net::HTTP.new(url.host, url.port).start do |http|
       http.request(req)
     end
  

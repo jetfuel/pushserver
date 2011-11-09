@@ -1,6 +1,9 @@
 GEM
   remote: http://rubygems.org/
   specs:
+    active_support (3.0.0)
+      activesupport (= 3.0.0)
+    activesupport (3.0.0)
     git (1.2.5)
     jeweler (1.6.4)
       bundler (~> 1.0)
@@ -15,6 +18,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  active_support
   bundler (~> 1.0.0)
   jeweler (~> 1.6.4)
   json
