@@ -30,11 +30,16 @@ module PushServer
     res = Net::HTTP.new(url.host, url.port).start do |http|
       http.request(req)
     end
- 
+
+    # status 200 means we did send a push notificaiton
+    # status 100 means we didn't send a push notification
+    # TODO: In the future, Push Notification Server will return status 400 for false, and status 500 for some exception. Change accordingly
     if res.body.include? "code\":200"
       return true
-    else
+    elsif res.body.include? "code\":100"
       return false
+    else
+      raise res.body
     end
   end
 end

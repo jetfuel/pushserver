@@ -4,8 +4,14 @@ require 'pushserver'
 
 PushServer.appId = "pushtest"
 PushServer.uri = 'http://184.72.174.245/pushservice.php'
-if PushServer.sendPushToUser("jeffwang@atti.com", "This is my new message")
-  puts "YES"
-else
-  puts "No, need to send SMS"
+
+begin
+  result = PushServer.sendPushToUser("jeffwang@atti.com", "This is my new message")
+  if result == true
+    puts "Yes, at least a push notification is sent"
+  elsif result == false
+    puts "No, need to send SMS"
+  end
+rescue => ex
+  puts ex.message
 end
