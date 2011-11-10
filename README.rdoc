@@ -12,16 +12,17 @@ PusServer Gem only has one method
   sendPushToUser(uid, alert)
     * uid: uid is the username/user_email
     * alert: The message that will be sent to the user. 
+    * return : boolean
+  This method will help to send push notifications. If the server can't send any push notification, the sendPushToUser will return false. If at least one push notificaiton is sent successfully, the sendPushToUser will return true.  
 
 To test, simply run the following ruby code.
-Of course, you will have to install the 'pushtest' application. Please contact
-David Chilongo <dchilongo@atti.com> for help
 ============
 require 'pushserver'
-PushServer.appId = "pushtest"
+PushServer.appId = "your appId"
 PushServer.uri = 'http://184.72.174.245/pushservice.php'
 PushServer.sendPushToUser("uer's email", "This is the message")
 ============
+Please follow the steps in http://onewiki.yellowpages.com/display/MB/Push+Notification+Service to register with APNS, Android c2dm and with the push notification server. 
 
 == Contributing to pushserver
  
