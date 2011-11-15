@@ -8,20 +8,18 @@ module PushServer
   @@uri = 'http://184.72.174.245/pushservice.php'
   @@appId = 'pushtest'
 
-  def self.sendPushToUser(uid, alert)
+  def self.sendPushToUser(metadata)
     require 'net/http'
     require 'json'
 
     url = URI.parse(@@uri)
     # json data
-    metadata = JSON.unparse({ 
-                'm' => 'push',
-                'appId' => @@appId,
-                'uid'=>uid,
-                'delayWhileIdle' => 1,
-                'badge' => 0,
-                'alert' => alert})
-    json_data = {'metadata'=>metadata}
+    if metadata['appId'].nil?
+      metadata['appId'] = @@appId
+    end
+    metadata['m'] = 'push'
+    metadatajson = JSON.unparse(metadata) 
+    json_data = {'metadata'=>metadatajson}
 
     # Send out the request. This is where the magic begins
     req = Net::HTTP::Post.new(url.path)

@@ -9,10 +9,9 @@ PushServer Gem has two main attributes.
 2. appId, This is the appId of the application. The default value is 'pushtest'. To Modify, use PushServer.appId.
 
 PusServer Gem only has one method
-  sendPushToUser(uid, alert)
-    * uid: uid is the username/user_email
-    * alert: The message that will be sent to the user. 
-    * return : boolean
+  sendPushToUser(metadata)
+    * metadata - a dictionary that holds all the infomation. Please check the "Send Push section" in http://onewiki.yellowpages.com/download/attachments/75861924/PushNotification.doc for the fields that should be included in the metadata. The filed 'm' will always be filled as "push" in the gem. The field 'appId' will be filled as the appId attribute if it is not provided in the dictionary.
+    * return : true for successfully sent push notification. false for can't find any device to send. Raise exception for any other errors. 
   This method will help to send push notifications. If the server can't send any push notification, the sendPushToUser will return false. If at least one push notificaiton is sent successfully, the sendPushToUser will return true.  
 
 To test, simply run the following ruby code.
@@ -20,7 +19,10 @@ To test, simply run the following ruby code.
 require 'pushserver'
 PushServer.appId = "your appId"
 PushServer.uri = 'http://184.72.174.245/pushservice.php'
-PushServer.sendPushToUser("uer's email", "This is the message")
+metadata = { 
+           'uid'=> 'jeffwang@atti.com',
+           'alert' => 'This is a test push message'}
+PushServer.sendPushToUser(metadata)
 ============
 Please follow the steps in http://onewiki.yellowpages.com/display/MB/Push+Notification+Service to register with APNS, Android c2dm and with the push notification server. 
 
